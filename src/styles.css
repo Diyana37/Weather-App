@@ -77,20 +77,13 @@ body {
   flex-direction: column;
 }
 
-.measurements {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 25px;
-}
-
-.measurements a {
-  text-decoration: underline;
+.right-section p {
+  margin-top: 10px;
+  margin-bottom: 0;
 }
 
 .current-weather {
   flex: 1;
-  background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Savault_Chapel_Under_Milky_Way_BLS.jpg/1200px-Savault_Chapel_Under_Milky_Way_BLS.jpg') no-repeat center center;
   background-size: cover;
   display: flex;
   flex-direction: column;
@@ -99,6 +92,14 @@ body {
   color: white;
   text-shadow: 0 0 10px rgba(0,0,0,0.7);
   border-bottom-left-radius: 20px;
+}
+
+.day-background {
+    background: url('https://nationaltoday.com/wp-content/uploads/2022/05/Sun-Day--1200x834.jpg') no-repeat center center;
+}
+
+.night-background {
+  background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Savault_Chapel_Under_Milky_Way_BLS.jpg/1200px-Savault_Chapel_Under_Milky_Way_BLS.jpg') no-repeat center center;
 }
 
 .temp-title {
