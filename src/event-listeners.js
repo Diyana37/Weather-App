@@ -1,5 +1,5 @@
 import { getWeatherByLocation } from "./api-client.js";
-import { extractWeatherInfo } from "./response-parser.js";
+import { extractWeatherInfo, showExtractedWeatherInfo } from "./response-parser.js";
 
 export function attachEventListenerToInput() {
   const locationInputForm = document.querySelector("#search-form");
@@ -12,10 +12,11 @@ export function attachEventListenerToInput() {
     if (location) {
       console.log(location);
       const data = await getWeatherByLocation(location);
-      console.log("raw data", data);
-
+      
       const formattedData = extractWeatherInfo(data);
       console.log("formatted data", formattedData);
+
+      showExtractedWeatherInfo(formattedData);
 
       locationInput.value = "";
     }
