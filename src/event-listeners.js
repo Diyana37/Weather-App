@@ -1,5 +1,14 @@
-import { getWeatherByLocation } from "./api-client.js";
-import { extractWeatherInfo, showExtractedWeatherInfo } from "./response-parser.js";
+import {
+  getWeatherByLocation,
+  getForecastByLocationAndDate,
+} from "./api-client.js";
+import {
+  extractWeatherForecastInfo,
+  extractWeatherInfo,
+  getForecastDate,
+  showExtractedWeatherForecastInfo,
+  showExtractedWeatherInfo,
+} from "./response-parser.js";
 
 export function attachEventListenerToInput() {
   const locationInputForm = document.querySelector("#search-form");
@@ -10,13 +19,31 @@ export function attachEventListenerToInput() {
     const location = locationInput.value;
 
     if (location) {
-      console.log(location);
       const data = await getWeatherByLocation(location);
-      
       const formattedData = extractWeatherInfo(data);
-      console.log("formatted data", formattedData);
-
       showExtractedWeatherInfo(formattedData);
+
+      let startOffset = 14;
+
+      for (let index = 1; index <= 5; index++) {
+        const date = new Date();
+        date.setDate(date.getDate() + startOffset++);
+
+        const formattedDate =
+          date.getFullYear() +
+          "-" +
+          String(date.getMonth() + 1).padStart(2, "0") +
+          "-" +
+          String(date.getDate()).padStart(2, "0");
+
+        const forecastData = await getForecastByLocationAndDate(
+          location,
+          formattedDate
+        );
+
+        const formattedForecastData = extractWeatherForecastInfo(forecastData);
+        showExtractedWeatherForecastInfo(formattedForecastData, index);
+      }
 
       locationInput.value = "";
     }
