@@ -1,3 +1,5 @@
+const END_DATE = 14 + 7;
+
 export function extractWeatherInfo(data) {
   if (data) {
     const tokens = data.location?.localtime?.split(" ");
@@ -13,6 +15,21 @@ export function extractWeatherInfo(data) {
       humidity: data.current?.humidity,
       feelslike_c: data.current?.feelslike_c,
       condition: data.current?.condition.text,
+    };
+
+    return formattedData;
+  }
+
+  return null;
+}
+
+export function extractWeatherForecastInfo(data) {
+  if (data) {
+    const formattedData = {
+      date: data.forecast?.forecastday[0]?.date,
+      avgtemp_c: data.forecast?.forecastday[0]?.day?.avgtemp_c,
+      condition: data.forecast?.forecastday[0]?.day?.condition?.text,
+      condition_icon: data.forecast?.forecastday[0]?.day?.condition?.icon,
     };
 
     return formattedData;
@@ -55,4 +72,22 @@ export function showExtractedWeatherInfo(formattedData) {
     currentWeatherDiv.classList.remove(".day-background");
     currentWeatherDiv.classList.add("night-background");
   }
+}
+
+export function showExtractedWeatherForecastInfo(formattedData, index) {
+  const firstDay = document.querySelector(`#week-weather-day-${index}`);
+  firstDay.textContent = formattedData.date;
+
+  const firstIcon = document.querySelector(`#week-weather-icon-${index}`);
+  firstIcon.src = formattedData.condition_icon;
+
+  const firstCondition = document.querySelector(
+    `#week-weather-condition-${index}`
+  );
+  firstCondition.textContent = formattedData.condition;
+
+  const firstTemperature = document.querySelector(
+    `#week-weather-temperature-${index}`
+  );
+  firstTemperature.textContent = `${formattedData.avgtemp_c}°C`;
 }
